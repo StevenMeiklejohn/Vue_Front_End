@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <script src="./js/bundle.js"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in items">
+        <span>{{item.name}}</span>
+        <span v-if="item.isPurchased">Purchased!</span>
+        <span v-if="item.price > 0">{{item.price}}</span>
+        <button v-if="!item.isPurchased" v-on:click="buyItem(index)">Purchase</button>
+      </li>
+    </ul>
+
+    <form v-on:submit.prevent="saveNewItem">
+      <label for="new-item">Add a new Item:</label>
+      <input id="new-item" type="text" v-model="newItem" required/>
+      <label for="new-item-price">Item Price:</label>
+      <input id="new-item-price" type="text" v-model="newPrice"/>
+      <input type="submit" value="Save New Item"/>
+    </form>
+  </div>
+</body>
+</html>
