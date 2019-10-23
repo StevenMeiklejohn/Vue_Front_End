@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import axios from 'axios'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     mounted(){
       this.fetchItems();
-    }
+    },
     methods: {
       saveNewItem: function(){
 
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
           isPurchased: false,
           price: this.newPrice
         });
+        this.postNewItem();
         this.newItem="";
         this.newPrice=0;
       },
@@ -29,6 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let request = fetch("http://localhost:8080/items/")
         .then(response => response.json())
         .then(data => this.items = data)
+      },
+      postNewItem () {
+        let payload = {
+          name: this.newItem,
+          isPurchased: false,
+          price: this.newPrice
+        }
+        axios.post('http://jsonplaceholder.typicode.com/posts', payload)
+        .then((response) => {console.log(response)})
+        .catch((e) => {
+          console.error(e)
+        })
       }
     }
   });
